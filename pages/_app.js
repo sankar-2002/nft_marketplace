@@ -8,11 +8,13 @@ const MyApp = ({ Component, pageProps }) => (
   <ThemeProvider attribute="class">
     <div className="dark:bg-nft-dark bg-white min-h-screen">
       <Navbar />
-      <Component {...pageProps} />
+      <div className="pt-65">
+        <Component {...pageProps} />
+      </div>
       <Footer />
     </div>
     <Script src="https://kit.fontawesome.com/4e2056c89d.js" crossOrigin="anonymous" />
-  </ThemeProvider>
+  </ThemeProvider >
 );
 
 export default MyApp;
