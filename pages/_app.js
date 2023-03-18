@@ -14,7 +14,7 @@ const MyApp = ({ Component, pageProps }) => (
       <Footer />
     </div>
     <Script src="https://kit.fontawesome.com/4e2056c89d.js" crossOrigin="anonymous" />
-  </ThemeProvider >
+  </ThemeProvider>
 );
 
 export default MyApp;
