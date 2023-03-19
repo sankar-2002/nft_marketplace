@@ -61,36 +61,37 @@ const Home = () => {
          minlg:text-4xl font-semibold
          ml-4 xs:ml-0"
           >Best Creators
-
-            <div className="relative flex-1 max-w-full flex mt-3" ref={parentRef}>
-              <div className="flex flex-row w-max overflow-x-scroll no-scrollbar select-none" ref={scrollRef}>
-
-                {[6, 7, 8, 9, 10].map((i) => (
-                  <CreatorCard
-                    key={`creator-${i}`}
-                    rank={i}
-                    creatorImage={images[`creator${i}`]}
-                    creatorName={`0x${makeId(3)}...${makeId(4)}`}
-                    creatorEths={10 - i * 0.5}
-                  />
-                ))}
-
-                {!hideButtons && (
-                  <>
-
-                    <div onClick={() => handleScroll('left')} className="absolute w-8 h-8 minlg:w-12 minlg:h-12 top-45 cursor-pointer left-0">
-                      <Image src={images.left} layout="fill" objectFit="contain" alt="left_arrow" className={theme === 'light' && 'filter invert'} />
-                    </div>
-
-                    <div onClick={() => handleScroll('right')} className="absolute w-8 h-8 minlg:w-12 minlg:h-12 top-45 cursor-pointer right-0">
-                      <Image src={images.right} layout="fill" objectFit="contain" alt="left_arrow" className={theme === 'light' && 'filter invert'} />
-                    </div>
-
-                  </>
-                )}
-              </div>
-            </div>
           </h1>
+
+          <div className="relative flex-1 max-w-full flex mt-3" ref={parentRef}>
+            <div className="flex flex-row w-max overflow-x-scroll no-scrollbar select-none" ref={scrollRef}>
+
+              {[6, 7, 8, 9, 10].map((i) => (
+                <CreatorCard
+                  key={`creator-${i}`}
+                  rank={i}
+                  creatorImage={images[`creator${i}`]}
+                  creatorName={`0x${makeId(3)}...${makeId(4)}`}
+                  creatorEths={10 - i * 0.5}
+                />
+              ))}
+
+              {!hideButtons && (
+                <>
+
+                  <div onClick={() => handleScroll('left')} className="absolute w-8 h-8 minlg:w-12 minlg:h-12 top-45 cursor-pointer left-0">
+                    <Image src={images.left} layout="fill" objectFit="contain" alt="left_arrow" className={theme === 'light' && 'filter invert'} />
+                  </div>
+
+                  <div onClick={() => handleScroll('right')} className="absolute w-8 h-8 minlg:w-12 minlg:h-12 top-45 cursor-pointer right-0">
+                    <Image src={images.right} layout="fill" objectFit="contain" alt="left_arrow" className={theme === 'light' && 'filter invert'} />
+                  </div>
+
+                </>
+              )}
+            </div>
+          </div>
+
         </div>
 
         <div className="mt-10">
