@@ -4,6 +4,7 @@ import { useDropzone } from 'react-dropzone';
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
 
+import { NFTContext } from '../context/NFTContext';
 import { Button, Input } from '../components';
 import images from '../assets';
 
@@ -11,10 +12,12 @@ const CreateNFT = () => {
   const [fileUrl, setFileUrl] = useState(null);
   const [formInput, setFormInput] = useState({ price: '', name: '', description: '' });
   const { theme } = useTheme();
+  const { uploadToIPFS } = useContext(NFTContext);
 
-  const onDrop = useCallback(() => {
-    // upload image to ipfs
-
+  const onDrop = useCallback(async (acceptedFile) => {
+    const url = await uploadToIPFS(acceptedFile[0]);
+    console.log({ url });
+    setFileUrl(url);
   }, []);
 
   // useMemo and useCallback both accepts a function and an array of dependencies.....
