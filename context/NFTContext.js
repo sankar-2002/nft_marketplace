@@ -21,6 +21,8 @@ const client = ipfsHttpClient({
   },
 });
 
+const fetchContract = (signerOrProvider) => new ethers.Contract(MarketAddress, MarketAddressABI, signerOrProvider);
+
 export const NFTContext = React.createContext();
 
 // <NFTProvider>.....children.....</NFTProvider>
@@ -58,15 +60,48 @@ export const NFTProvider = ({ children }) => {
     const subdomain = 'https://cryptosea.infura-ipfs.io';
     try {
       const added = await client.add({ content: file });
-      const URL = `${subdomain}/ipfs/${added.path}`;
-      return URL;
+      const url = `${subdomain}/ipfs/${added.path}`;
+      return url;
     } catch (error) {
       console.log('Error uploading file to IPFS.');
     }
   };
 
+  const createNFT = async (formInput, fileUrl, router) => {
+    const { name, description, price } = formInput;
+
+    if (!name || !description || !price || !fileUrl) return;
+
+    const data = JSON.stringify({ name, description, image: fileUrl });
+
+    const subdomain = 'https://cryptosea.infura-ipfs.io';
+    try {
+      const added = await client.add({ content: data });
+      const url = `${subdomain}/ipfs/${added.path}`;
+      await createSale(url, price);
+      router.push('/');
+    } catch (error) {
+      console.log('Error uploading file to IPFS.');
+    }
+  };
+
+  const createSale = async (url, formInputPrice, isReselling, id) => {
+    const web3Modal = new Web3Modal();
+    const connection = await web3Modal.connect();
+    const provider = new ethers.providers.Web3Provider(connection);
+    const signer = provider.getSigner();
+
+    const price = ethers.utils.parseUnits(formInputPrice, 'ether'); // price conversion ether <-> wei
+    const contract = fetchContract(signer);
+    const listingPrice = await contract.getListingPrice();
+
+    const transaction = await contract.createToken(url, price, {value: listingPrice.toString() });
+
+    await transaction.wait();
+  };
+
   return (
-    <NFTContext.Provider value={{ nftCurrency, connectWallet, currentAccount, uploadToIPFS }}>
+    <NFTContext.Provider value={{ nftCurrency, connectWallet, currentAccount, uploadToIPFS, createNFT }}>
       {children}
     </NFTContext.Provider>
   );
