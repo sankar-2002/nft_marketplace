@@ -96,7 +96,7 @@ export const NFTProvider = ({ children }) => {
     const listingPrice = await contract.getListingPrice();
 
     const transaction = !isReselling
-      ? await contract.createToken(url, price, { value: listingPrice.toStrin() })
+      ? await contract.createToken(url, price, { value: listingPrice.toString() })
       : await contract.resellToken(id, price, { value: listingPrice.toString() });
 
     await transaction.wait();
