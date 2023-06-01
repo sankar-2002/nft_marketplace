@@ -82,7 +82,7 @@ contract NFTMarketplace is ERC721URIStorage {
         require(
             msg.value == listingPrice,
             "Price must be equal to listing Price"
-        );
+        ); // COMMISION SET BY DEVELOPER
 
         //creating market Item...
 
@@ -151,7 +151,7 @@ contract NFTMarketplace is ERC721URIStorage {
         payable(idToMarketItem[tokenId].seller).transfer(msg.value); //transferring the price of nft from buyer to seller
     }
 
-    //fetchMarketItems gives all the unsold items in the marketPlace....
+    //fetchMarketItems gives all the unsold items in the marketPlace HomePage....
 
     function fetchMarketItems() public view returns (MarketItem[] memory) {
         uint itemCount = _tokenIds.current();
